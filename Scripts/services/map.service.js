@@ -1,4 +1,4 @@
-import { utilService } from './services/util.service.js'
+import { utilService } from './util.service.js'
 
 export const mapService = {
   initMap,
@@ -7,8 +7,7 @@ export const mapService = {
   getMap,
 }
 
-
-const CURR_LOC_KEY='curr_loc_DB'
+const CURR_LOC_KEY = 'curr_loc_DB'
 
 // Var that is used throughout this Module (not global)
 var gMap
@@ -44,7 +43,7 @@ function addMarker(loc) {
     map: gMap,
     title: 'Hello World!',
   })
-  utilService.saveToStorage(CURR_LOC_KEY,marker)
+  utilService.saveToStorage(CURR_LOC_KEY, marker)
 }
 
 function panTo(lat, lng) {

@@ -1,5 +1,5 @@
 import { storageService } from '.services/async.storage.service.js'
-import { utilService } from './services/utilService.js'
+import { utilService } from './services/util.service.js'
 
 //TODO: export relevant functions
 
@@ -11,27 +11,25 @@ let gPlaces = get(entityType, entityId) || createPlaces()
 // placeService.query(LOC_KEY)
 // .then(res=>post(entityType, newEntity))
 
-
-
 function createPlaces() {
-    //TODO: make an array gPlaces with all created places
-    //TODO: store gPlaces to storage
-    let places = utilService.loadFromStorage(LOCATION_KEY)
-    if (!places || !places.length) _createPlace()
+  //TODO: make an array gPlaces with all created places
+  //TODO: store gPlaces to storage
+  let places = utilService.loadFromStorage(LOCATION_KEY)
+  if (!places || !places.length) _createPlace()
 }
 
-function getEmptyPlace(name = '',) {
-    return { id: '', name, lat, lng, weather, createdAt, updatedAt, score }
+function getEmptyPlace(name = '') {
+  return { id: '', name, lat, lng, weather, createdAt, updatedAt, score }
 }
 
 function _createPlace() {
-    const place = getEmptyPlace
-    place.id = utilService.makeId()
-    place.name = name || 'No name'
-    place.lat = lat || 32
-    place.lng = lng || 34
-    place.weather = '20C'
-    place.createdAt = Date.now()
-    place.updatedAt = '12423535'
-    return place
+  const place = getEmptyPlace
+  place.id = utilService.makeId()
+  place.name = name || 'No name'
+  place.lat = lat || 32
+  place.lng = lng || 34
+  place.weather = '20C'
+  place.createdAt = Date.now()
+  place.updatedAt = '12423535'
+  return place
 }
