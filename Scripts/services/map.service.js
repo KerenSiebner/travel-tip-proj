@@ -21,16 +21,19 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       zoom: 15,
     })
     // Configure the click listener.
-    gMap.addListener("click", (mapsMouseEvent) => {
-        const loc= {lat: mapsMouseEvent.latLng.lat(),lng:mapsMouseEvent.latLng.lng()}
-        addMarker(loc)
+    gMap.addListener('click', (mapsMouseEvent) => {
+      const loc = {
+        lat: mapsMouseEvent.latLng.lat(),
+        lng: mapsMouseEvent.latLng.lng(),
+      }
+      addMarker(loc)
     })
     console.log('Map!', gMap)
   })
 }
 
 function addMarker(loc) {
-    console.log('loc', loc)
+  console.log('loc', loc)
   var marker = new google.maps.Marker({
     position: loc,
     map: gMap,
@@ -54,6 +57,6 @@ function _connectGoogleApi() {
 
   return new Promise((resolve, reject) => {
     elGoogleApi.onload = resolve
-    elGoogleApi.onerror = () => reject('Google script failed to load')
+    elGoogleApi.onerror = () => reject('Google Map script failed to load')
   })
 }
