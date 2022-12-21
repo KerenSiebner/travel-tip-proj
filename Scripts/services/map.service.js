@@ -1,3 +1,5 @@
+import { utilService } from './services/util.service.js'
+
 export const mapService = {
   initMap,
   addMarker,
@@ -39,7 +41,7 @@ function addMarker(loc) {
     map: gMap,
     title: 'Hello World!',
   })
-  return marker
+  utilService.saveToStorage(CURR_LOC_KEY,marker)
 }
 
 function panTo(lat, lng) {
