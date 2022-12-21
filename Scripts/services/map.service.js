@@ -21,15 +21,16 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       zoom: 15,
     })
     // Configure the click listener.
-    gMap.addListener('click', {
-      lat: mapsMouseEvent.latLng.lat(),
-      lng: mapsMouseEvent.latLng.lng(),
+    gMap.addListener("click", (mapsMouseEvent) => {
+        const loc= {lat: mapsMouseEvent.latLng.lat(),lng:mapsMouseEvent.latLng.lng()}
+        addMarker(loc)
     })
     console.log('Map!', gMap)
   })
 }
 
 function addMarker(loc) {
+    console.log('loc', loc)
   var marker = new google.maps.Marker({
     position: loc,
     map: gMap,
