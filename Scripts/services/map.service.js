@@ -7,6 +7,9 @@ export const mapService = {
   getMap,
 }
 
+
+const CURR_LOC_KEY='curr_loc_DB'
+
 // Var that is used throughout this Module (not global)
 var gMap
 
