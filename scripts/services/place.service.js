@@ -1,35 +1,63 @@
-import { storageService } from '.services/async.storage.service.js'
-import { utilService } from './services/util.service.js'
+import { storageService } from './async.storage.service.js'
+import { utilService } from './util.service.js'
+import { weatherService } from './weather.service.js'
+
+export const placeService = {
+    createPlace,
+    save,
+    getPlaces,
+    savePlaceToStorage
+}
 
 //TODO: export relevant functions
 
-const LOCATION_KEY = 'locDB'
+const PLACE_KEY = 'locDB'
 
-let gPlaces = get(entityType, entityId) || createPlaces()
+let gPlaces = utilService.loadFromStorage(PLACE_KEY) || []
 
-//function in controller:
-// placeService.query(LOC_KEY)
-// .then(res=>post(entityType, newEntity))
-
-function createPlaces() {
-  //TODO: make an array gPlaces with all created places
-  //TODO: store gPlaces to storage
-  let places = utilService.loadFromStorage(LOCATION_KEY)
-  if (!places || !places.length) _createPlace()
+function getPlaces() {
+    return gPlaces
+}
+function savePlaceToStorage(place) {
+    gPlaces.push(place)
+    utilService.saveToStorage(PLACE_KEY, gPlaces)
+    console.log('gPlaces', gPlaces)
 }
 
-function getEmptyPlace(name = '') {
-  return { id: '', name, lat, lng, weather, createdAt, updatedAt, score }
+
+
+function save(place) {
+    if (place.id) {
+        return storageService.put(PLACE_KEY, place)
+    } else {
+        return storageService.post(PLACE_KEY, place)
+    }
 }
 
-function _createPlace() {
-  const place = getEmptyPlace
-  place.id = utilService.makeId()
-  place.name = name || 'No name'
-  place.lat = lat || 32
-  place.lng = lng || 34
-  place.weather = '20C'
-  place.createdAt = Date.now()
-  place.updatedAt = '12423535'
-  return place
+
+function createPlace(loc) {
+    //   const place = getEmptyPlace
+// console.log('weatherService.callWeather(loc)', weatherService.callWeather(loc).then(res=> res))
+    // let weather = axios.weatherService.callWeather(loc)
+    // console.log('weather', weather)
+    const place = {
+        id: utilService.makeId(),
+        //   name.  'No name'
+        lat: loc.lat || 32,
+        lng: loc.lng || 34,
+        // weather: res,
+        createdAt: Date.now(),
+        updatedAt: '12423535'
+    }
+    return place
 }
+// function createPlaces() {
+//   //TODO: make an array gPlaces with all created places
+//   //TODO: store gPlaces to storage
+//   gPlaces = utilService.loadFromStorage(PLACE_KEY)
+//   if (!gPlaces || !gPlaces.length) gPlaces
+// }
+
+// function getEmptyPlace(name = '') {
+//   return { id: '', name, lat, lng, weather, createdAt, updatedAt, score }
+// }

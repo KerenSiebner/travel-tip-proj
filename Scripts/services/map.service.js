@@ -1,4 +1,5 @@
 import { utilService } from './util.service.js'
+import { placeService } from './place.service.js'
 
 export const mapService = {
   initMap,
@@ -6,6 +7,8 @@ export const mapService = {
   panTo,
   getMap,
 }
+
+let gPlaces=[]
 
 const CURR_LOC_KEY = 'curr_loc_DB'
 
@@ -30,11 +33,15 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         lat: mapsMouseEvent.latLng.lat(),
         lng: mapsMouseEvent.latLng.lng(),
       }
+      console.log('loc', loc)
+      let place = placeService.createPlace(loc)
+      placeService.savePlaceToStorage(place)
       addMarker(loc)
     })
     console.log('Map!', gMap)
   })
 }
+
 
 function addMarker(loc) {
   console.log('loc', loc)
@@ -43,8 +50,10 @@ function addMarker(loc) {
     map: gMap,
     title: 'Hello World!',
   })
-  utilService.saveToStorage(CURR_LOC_KEY, marker)
+  return marker
 }
+
+
 
 function panTo(lat, lng) {
   var laLatLng = new google.maps.LatLng(lat, lng)

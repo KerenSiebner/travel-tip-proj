@@ -1,6 +1,7 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 import { searchService } from './services/search.service.js'
+import { placeService } from './services/place.service.js'
 
 window.onload = onInit
 window.onAddMarker = onAddMarker
@@ -26,6 +27,7 @@ function getPosition() {
     navigator.geolocation.getCurrentPosition(resolve, reject)
   })
 }
+
 
 function onMyPlace() {
   getPosition()
@@ -87,6 +89,9 @@ function onPlaceInput(placeStr) {
     })
     .then((place) => {
       centerMap(place.coords)
+      // mapService.addMarker(place)
+      const placeCard = placeService.createPlace(place.coords)
+      placeService.savePlaceToStorage(placeCard)
     })
     .catch((err) => console.log('Error by finding the requested place:', err))
 

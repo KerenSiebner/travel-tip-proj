@@ -1,4 +1,4 @@
-export const weather = { callWeather }
+export const weatherService = { callWeather }
 
 // const testAPI = { lat: 32.047104, lng: 34.832384 }
 
@@ -12,8 +12,8 @@ function callWeather({ lat, lng: lon }) {
     )
     .then((weatherData) => {
       console.log('OpenWeather API Requested')
-      //   console.log(weatherData.data.weather)
-      return weatherData.data.weather
+        console.log(weatherData.data.weather[0])
+      return weatherData.data.weather[0]
     })
     .catch((err) => {
       console.warn('HAD ERROR WITH:', err)
