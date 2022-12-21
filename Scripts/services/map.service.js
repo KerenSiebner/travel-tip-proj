@@ -2,14 +2,14 @@ export const mapService = {
   initMap,
   addMarker,
   panTo,
-  getMap
+  getMap,
 }
 
 // Var that is used throughout this Module (not global)
 var gMap
 
-function getMap(){
-    return gMap
+function getMap() {
+  return gMap
 }
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
@@ -21,7 +21,10 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       zoom: 15,
     })
     // Configure the click listener.
-    gMap.addListener("click", (mapsMouseEvent) => {return {lat: mapsMouseEvent.latLng.lat(),lng:mapsMouseEvent.latLng.lng()})})
+    gMap.addListener('click', {
+      lat: mapsMouseEvent.latLng.lat(),
+      lng: mapsMouseEvent.latLng.lng(),
+    })
     console.log('Map!', gMap)
   })
 }
