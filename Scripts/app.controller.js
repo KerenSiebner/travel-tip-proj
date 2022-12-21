@@ -79,7 +79,16 @@ function onPanTo() {
 }
 
 function onPlaceInput(placeStr) {
-  console.log(placeStr)
-  searchService.searchAddress(placeStr)
+  searchService
+    .searchAddress(placeStr)
+    .then((searchRes) => {
+      console.log('Places found:', searchRes)
+      return searchRes
+    })
+    .then((place) => {
+      centerMap(place.coords)
+    })
+    .catch((err) => console.log('Error by finding the requested place:', err))
+
   return false
 }

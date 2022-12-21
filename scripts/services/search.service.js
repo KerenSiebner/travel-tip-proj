@@ -2,27 +2,23 @@ export const searchService = {
   searchAddress,
 }
 
-import { mapService } from './map.service.js'
-
 let geocoder
-let map = mapService.getMap()
 
 function searchAddress(addressStr) {
-  console.log(addressStr)
+  //   console.log(addressStr)
   console.log('InitSearch')
 
   return _connectGoogleApi().then(() => {
     console.log('Google Code available')
     geocoder = new google.maps.Geocoder()
-    geocoder.geocode({ address: addressStr }, function (results, status) {
-      if (status == 'OK') {
-        map.setCenter(results[0].geometry.location)
-        var marker = new google.maps.Marker({
-          map: map.getMap(),
-          position: results[0].geometry.location,
-        })
-      } else {
-        alert('Geocode was not successful for the following reason: ' + status)
+    return geocoder.geocode({ address: addressStr }).then((res) => {
+      return {
+        address: res.results[0].formatted_address,
+        coords: {
+          lat: res.results[0].geometry.location.lat(),
+          lng: res.results[0].geometry.location.lng(),
+        },
+        placeId: res.results[0].place_id,
       }
     })
   })
