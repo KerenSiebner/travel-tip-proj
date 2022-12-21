@@ -6,6 +6,7 @@ window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
+window.onMyPlace = onMyPlace
 
 function onInit() {
     mapService.initMap()
@@ -23,9 +24,31 @@ function getPosition() {
     })
 }
 
-function onAddMarker() {
+function onMyPlace() {
+    getPosition()
+        //? DONE: get user location 
+        .then(userPos => {
+            return {
+                lat: userPos.coords.latitude,
+                lng: userPos.coords.longitude
+            }
+        })
+        // ? DONE: center map
+        .then(centerMap)
+        // ? DONE : mark the location on the map
+        .then(onAddMarker)
+}
+
+function centerMap(coords) {
+    const { lat, lng } = coords
+    mapService.getMap().setCenter({ lat, lng });
+    return coords
+}
+
+function onAddMarker(coords) {
     console.log('Adding a marker')
-    mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 })
+    const { lat, lng } = coords
+    mapService.addMarker({ lat, lng })
 }
 
 function onGetLocs() {
